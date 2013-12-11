@@ -17,3 +17,4 @@ prog_seg/
 
 py-cfg/
   contains source code for Adaptor Grammars (use Makefile to build)
+  only needs to be compiled once
