@@ -24,14 +24,18 @@ OUTPUTPREFIX=r00
 GRAMMAR=unigram
 
 LANGUAGE=geo
-#which language is used
-GOLDB=200
-#which concentration parameter was used in generating the data
-SET=01
-#which random set
-SOURCE=data/$(LANGUAGE)/$(LANGUAGE)_$(GOLDB)_$(SET).txt
-EVALDIR:=$(DIR)/$(LANGUAGE)_$(GOLDB)_$(GRAMMAR)Eval
-TMPDIR:=$(DIR)/$(LANGUAGE)_$(GOLDB)_$(GRAMMAR)Tmp
+# #which language is used
+# GOLDB=200
+# #which concentration parameter was used in generating the data
+# SET=01
+# #which random set
+# SOURCE=data/$(LANGUAGE)/$(LANGUAGE)_$(GOLDB)_$(SET).txt
+# EVALDIR:=$(DIR)/$(LANGUAGE)_$(GOLDB)_$(GRAMMAR)Eval
+# TMPDIR:=$(DIR)/$(LANGUAGE)_$(GOLDB)_$(GRAMMAR)Tmp
+
+SOURCE=data/corpus_$(LANGUAGE).txt
+EVALDIR:=$(DIR)/$(LANGUAGE)_$(GRAMMAR)Eval
+TMPDIR:=$(DIR)/$(LANGUAGE)_$(GRAMMAR)Tmp
 
 # BURNINSKIP is the fraction of the sample to be discarded before collecting 
 # samples for evaluation
@@ -54,11 +58,12 @@ PYCFG=./py-cfg/py-cfg
 
 # see PYCFG help for explanation
 # no discount
-PYAS=0 #disable discount
+PYAS=0 #disable discount, set to 0
 
-PYBS=1e4 #if no hyper-parameter sampling, set to gold
-PYGS=100 #if no hyper-parameter sampling, set to -1
-PYHS=0.01 #if no hyper-parameter sampling, set to -1
+PYBS=1 #if no hyper-parameter sampling, set to gold
+
+PYGS=100 #if no hyper-parameter sampling, set to -1, otherwise 100
+PYHS=0.01 #if no hyper-parameter sampling, set to -1, otherwise 0.01
 
 PYWS=1   #uniform dirichlet prior, but we do not estimate the rule probabilities
 
@@ -111,7 +116,7 @@ OUTPUTS=$(foreach GRAMMAR,$(GRAMMAR), \
 	$(foreach n,$(PYNS), \
 	$(foreach R,$(PYRS), \
 	$(foreach out,$(OUTS), \
-	$(EVALDIR)/$(OUTPUTPREFIX)_G$(GRAMMAR)_n$(n)_w$(w)_b$(b)_g$(g)_h$(h)_R$(R)_s$(SET).$(out)))))))))
+	$(EVALDIR)/$(OUTPUTPREFIX)_G$(GRAMMAR)_E_n$(n)_w$(w)_b$(b)_g$(g)_h$(h)_R$(R)_s$(SET).$(out)))))))))
 
 TARGETS=$(OUTPUTS)
 
@@ -148,7 +153,9 @@ $(TMPDIR)/$(OUTPUTPREFIX)_%.trsws: $(PYCFG) $(GRAMMARFILES) $(GOLDFILE) $(INPUTF
 		-C \
 		-d 101 \
 		-D \
+		-E \
 		-r $$RANDOM$$RANDOM \
+		-a $(PYAS) \
 		-b $(call getarg,b,$(*F)) \
 		-g $(call getarg,g,$(*F)) \
 		-h $(call getarg,h,$(*F)) \
@@ -168,12 +175,12 @@ $(TMPDIR)/%.gr: prog_seg/input2grammar.py $(INPUTFILE)
 # produce the input file, i.e. make format suitable for adaptor grammar
 $(INPUTFILE): prog_seg/source2AGinput.py $(SOURCE)
 	mkdir -p $(TMPDIR)
-	cat $(SOURCE) | prog_seg/source2AGinput.py > $@ 
+	cat $(SOURCE) | prog_seg/source2AGinput.py -w " # " > $@ 
 
 # produce a gold file, 
 $(GOLDFILE): prog_seg/source2AGinput.py $(SOURCE)
 	mkdir -p $(TMPDIR)
-	cat $(SOURCE) | prog_seg/source2AGinput.py --gold > $@
+	cat $(SOURCE) | prog_seg/source2AGinput.py --gold -w " # " > $@
 
 .PHONY: clean
 clean: 
