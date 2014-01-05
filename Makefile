@@ -23,7 +23,7 @@ OUTPUTPREFIX=r00
 # the model we use
 GRAMMAR=unigram
 
-LANGUAGE=geo
+LANGUAGE=hawaiian
 # #which language is used
 # GOLDB=200
 # #which concentration parameter was used in generating the data
@@ -116,7 +116,7 @@ OUTPUTS=$(foreach GRAMMAR,$(GRAMMAR), \
 	$(foreach n,$(PYNS), \
 	$(foreach R,$(PYRS), \
 	$(foreach out,$(OUTS), \
-	$(EVALDIR)/$(OUTPUTPREFIX)_G$(GRAMMAR)_E_n$(n)_w$(w)_b$(b)_g$(g)_h$(h)_R$(R)_s$(SET).$(out)))))))))
+	$(EVALDIR)/$(OUTPUTPREFIX)_G$(GRAMMAR)_n$(n)_w$(w)_b$(b)_g$(g)_h$(h)_R$(R)_s$(SET).$(out)))))))))
 
 TARGETS=$(OUTPUTS)
 
@@ -153,7 +153,6 @@ $(TMPDIR)/$(OUTPUTPREFIX)_%.trsws: $(PYCFG) $(GRAMMARFILES) $(GOLDFILE) $(INPUTF
 		-C \
 		-d 101 \
 		-D \
-		-E \
 		-r $$RANDOM$$RANDOM \
 		-a $(PYAS) \
 		-b $(call getarg,b,$(*F)) \
