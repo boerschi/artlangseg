@@ -93,12 +93,12 @@ WORDSPLITREGEX=[ ]+
 
 # INPUTFILE is the file that contains the adaptor grammar input
 #
-INPUTFILE:=$(TMPDIR)/AGinput.txt
+INPUTFILE:=$(TMPDIR)/AGinput_$(SET).txt
 
 # GOLDFILE is the file that contains word boundaries that will be used to
 # evaluate the adaptor grammar word segmentation
 #
-GOLDFILE:=$(TMPDIR)/AGgold.txt
+GOLDFILE:=$(TMPDIR)/AGgold_$(SET).txt
 
 
 # The list of files we will make
