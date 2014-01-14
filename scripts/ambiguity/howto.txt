@@ -1,0 +1,6 @@
+# calculate ambiguity
+sed 's/ # /\n/g' <goldcorpus> | sort | uniq -c | sort -rn | less | python scripts/ambiguity/wordprobs.py > <grammar>
+sed 's/ //g' <goldcorpus> | sed 's/#/ /g' | python scripts/ambiguity/unigramDecode.py <grammar> > <analysisfile>
+
+#in gnuplot, to visualize number of parses
+> plot <analysisfile> u 4
