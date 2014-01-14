@@ -23,17 +23,11 @@ OUTPUTPREFIX=r00
 # the model we use
 GRAMMAR=unigram
 
+#the grammar
 LANGUAGE=hawaiian
-# #which language is used
-# GOLDB=200
-# #which concentration parameter was used in generating the data
-# SET=01
-# #which random set
-# SOURCE=data/$(LANGUAGE)/$(LANGUAGE)_$(GOLDB)_$(SET).txt
-# EVALDIR:=$(DIR)/$(LANGUAGE)_$(GOLDB)_$(GRAMMAR)Eval
-# TMPDIR:=$(DIR)/$(LANGUAGE)_$(GOLDB)_$(GRAMMAR)Tmp
-
-SOURCE=data/corpus_$(LANGUAGE).txt
+#the index of the random corpus
+SET=01
+SOURCE:=data/corpus_$(LANGUAGE)_$(SET).txt
 EVALDIR:=$(DIR)/$(LANGUAGE)_$(GRAMMAR)Eval
 TMPDIR:=$(DIR)/$(LANGUAGE)_$(GRAMMAR)Tmp
 
@@ -49,7 +43,7 @@ OUTS=trscore
 
 # Each fold is a different run; to do 8 runs set FOLDS=0 1 2 3 4 5 6 7
 #FOLDS=01 02
-FOLDS=1
+FOLDS=01 02 03 04
 
 # PYCFG is the py-cfg program (including its path)
 #
@@ -138,7 +132,7 @@ $(EVALDIR)/$(OUTPUTPREFIX)_%.trscore: $(TMPDIR)/$(OUTPUTPREFIX)_%.travprs prog_s
 	prog_seg/eval.py --gold $(GOLDFILE) --train $< --score-cat-re="$(EVALREGEX)" --ignore-terminal-re="$(IGNORETERMINALREGEX)" --word-split-re=" " > $@	
 
 #generate the MBR solution from multiple samples
-$(TMPDIR)/$(OUTPUTPREFIX)_%.travprs: prog_seg/mbr.py $(foreach fold,$(FOLDS),$(TMPDIR)/$(OUTPUTPREFIX)_%_$(fold).trsws)
+$(TMPDIR)/$(OUTPUTPREFIX)_%.travprs: prog_seg/mbr.py $(foreach fold,$(FOLDS),$(TMPDIR)/$(OUTPUTPREFIX)_%_fold$(fold).trsws)
 	$^ > $@
 
 #produce samples from a single run = run the actual experiments
