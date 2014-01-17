@@ -1,0 +1,5 @@
+Ngram:^[+syl]	-25.0
+Ngram:[-syl]$	-25.0
+Ngram:[-syl] [-syl]	-25.0
+Ngram:[+syl] [+syl]	-25.0
+Ngram:[]	-4.0

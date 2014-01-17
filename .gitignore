@@ -1,0 +1,6 @@
+*.com
+*.class
+*.o
+*.*~
+*.pyc
+runs/*

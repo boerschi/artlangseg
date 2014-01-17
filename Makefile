@@ -27,7 +27,8 @@ GRAMMAR=unigram
 LANGUAGE=hawaiian
 #the index of the random corpus
 SET=01
-SOURCE:=data/corpus_$(LANGUAGE)_$(SET).txt
+STRUCT=4
+SOURCE:=data/corpus_$(LANGUAGE)_$(STRUCT)_$(SET).txt
 EVALDIR:=$(DIR)/$(LANGUAGE)_$(GRAMMAR)Eval
 TMPDIR:=$(DIR)/$(LANGUAGE)_$(GRAMMAR)Tmp
 
@@ -98,7 +99,7 @@ INPUTFILE:=$(TMPDIR)/AGinput_$(SET).txt
 # GOLDFILE is the file that contains word boundaries that will be used to
 # evaluate the adaptor grammar word segmentation
 #
-GOLDFILE:=$(TMPDIR)/AGgold_$(SET).txt
+GOLDFILE:=$(TMPDIR)/AGgold_$(STRUCT)_$(SET).txt
 
 
 # The list of files we will make
@@ -110,7 +111,7 @@ OUTPUTS=$(foreach GRAMMAR,$(GRAMMAR), \
 	$(foreach n,$(PYNS), \
 	$(foreach R,$(PYRS), \
 	$(foreach out,$(OUTS), \
-	$(EVALDIR)/$(OUTPUTPREFIX)_G$(GRAMMAR)_n$(n)_w$(w)_b$(b)_g$(g)_h$(h)_R$(R)_s$(SET).$(out)))))))))
+	$(EVALDIR)/$(OUTPUTPREFIX)_G$(GRAMMAR)_n$(n)_w$(w)_b$(b)_g$(g)_h$(h)_R$(R)_S$(STRUCT)_s$(SET).$(out)))))))))
 
 TARGETS=$(OUTPUTS)
 
