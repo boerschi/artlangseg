@@ -4,7 +4,9 @@
 
 lang=$1
 struct=$2
-version=$3
+freqdist=$3
+version=$4
+
 if ! [ -e pakna_test.txt ]
 then
   echo Generating pakna_test
@@ -21,7 +23,7 @@ python phomentCompress.py pakna_feats.txt -w ./ -g grammar_${lang}_${struct}.txt
 fi
 
 echo Generating a pseudo-${lang} corpus by executing the following:
-echo python makeCorpFromScoresAndFreqs.py scored_${lang}.txt freq-dist_brent.txt -o corpus_${lang}_${version}.txt -m -25.0 -p 0.25
-zcat scored_${lang}_${struct}.gz | python makeCorpFromScoresAndFreqs.py freq-dist_brent.txt -o corpus_${lang}_${struct}_${version}.txt -m -25.0 -p 0.25
+echo python makeCorpFromScoresAndFreqs.py scored_${lang}.txt freq-dist_${freqdist}.txt -o corpus_${lang}_${version}.txt -m -25.0 -p 0.25
+zcat scored_${lang}_${struct}.gz | python makeCorpFromScoresAndFreqs.py freq-dist_${freqdist}.txt -o corpus_${lang}_${struct}_${freqdist}_${version}.txt -m -25.0 -p 0.25
 
-echo Now you can inspect the output file corpus_${lang}_${version}.txt
+echo Now you can inspect the output file corpus_${lang}_${struct}_${freqdist}_${version}.txt
