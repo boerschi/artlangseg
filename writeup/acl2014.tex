@@ -1,18 +1,4 @@
-%
 % File acl2014.tex
-%
-% Contact: koller@ling.uni-potsdam.de, yusuke@nii.ac.jp
-%%
-%% Based on the style files for ACL-2013, which were, in turn,
-%% Based on the style files for ACL-2012, which were, in turn,
-%% based on the style files for ACL-2011, which were, in turn, 
-%% based on the style files for ACL-2010, which were, in turn, 
-%% based on the style files for ACL-IJCNLP-2009, which were, in turn,
-%% based on the style files for EACL-2009 and IJCNLP-2008...
-
-%% Based on the style files for EACL 2006 by 
-%%e.agirre@ehu.es or Sergi.Balari@uab.es
-%% and that of ACL 08 by Joakim Nivre and Noah Smith
 
 \documentclass[11pt]{article}
 \usepackage{acl2014}
@@ -27,47 +13,44 @@
 % smaller than 5cm (the original size); we will check this
 % in the camera-ready version and ask you to change it back.
 
+\title{The effects of lexical phonotactics, saturation,
+  and frequency skew on segmentability}
 
-\title{Instructions for ACL-2014 Proceedings}
-
-\author{First Author \\
+\author{Benjamin B{\"o}rschinger \\
+  Department of Computing / Macquarie University \\
+  {\tt benjamin.borschinger@mq.edu.au} \\\And
+  Robert Daland \\
   Affiliation / Address line 1 \\
-  Affiliation / Address line 2 \\
-  Affiliation / Address line 3 \\
-  {\tt email@domain} \\\And
-  Second Author \\
+  {\tt r.daland@gmail.com} \\} \\\And
+  Abdellah Fourtassi \\
   Affiliation / Address line 1 \\
-  Affiliation / Address line 2 \\
-  Affiliation / Address line 3 \\
-  {\tt email@domain} \\}
+  {\tt abdellah.fourtassi@gmail.com} \\}
 
 \date{}
 
 \begin{document}
 \maketitle
 \begin{abstract}
-  This document contains the instructions for preparing a camera-ready
-  manuscript for the proceedings of ACL-2014. The document itself
-  conforms to its own specifications, and is therefore an example of
-  what your manuscript should look like. These instructions should be
-  used for both papers submitted for review and for final versions of
-  accepted papers.  Authors are asked to conform to all the directions
-  reported in this document.
+  Previous works have proposed that the `segmentability' of a language
+  depends on its phonotactic structure and can be measured as the
+  entropy of licit segmentations of a corpus sample. These proposals
+  are tested here by generating artificial languages and measuring
+  their segmentability. Maximally permissive and restrictive grammars
+  (Pseudo-Berber, Pseudo-Senufo) were used to generate corpus samples 
+  in which the lexical saturation and frequency distributions were
+  varied parametrically. Lexical saturation tends to cause oversegmentation.
+  Interestingly, better segmentation was found for flat frequency
+  distributions than for the Zipfian distributions that match the
+  prior assumptions of the segmenter. The results show heretofore
+  unsuspected nuances of the relationship between phonotactic complexity,
+  word length, and word segmentation.
 \end{abstract}
 
 \section{Credits}
 
-This document has been adapted from the instructions for earlier ACL
-proceedings, including those for ACL-2012 by Maggie Li and Michael
-White, those from ACL-2010 by Jing-Shing Chang and Philipp Koehn,
-those for ACL-2008 by Johanna D. Moore, Simone Teufel, James Allan,
-and Sadaoki Furui, those for ACL-2005 by Hwee Tou Ng and Kemal
-Oflazer, those for ACL-2002 by Eugene Charniak and Dekang Lin, and
-earlier ACL and EACL formats. Those versions were written by several
-people, including John Chen, Henry S. Thompson and Donald
-Walker. Additional elements were taken from the formatting
-instructions of the {\em International Joint Conference on Artificial
-  Intelligence}.
+We wish to acknowledge Emmanuel Dupoux for inspiration and use of the
+computing cluster. We also wish to acknowledge Ewan Dunbar for animated
+discussion.
 
 \section{Introduction}
 
