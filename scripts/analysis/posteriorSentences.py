@@ -66,7 +66,9 @@ if __name__=="__main__":
             i+=1
 
     allBest = []
-    entropyBest = {i: [] for i in thresholds}
+    entropyBest = {}
+    for i in thresholds: entropyBest[i]=[]
+
     for i in counts.keys():
         goldwb = evaluate.words(goldsents[i])
         norm = float(sum(counts[i].values()))
@@ -99,7 +101,7 @@ if __name__=="__main__":
     allBestTypes = evaluate.types([x[0] for x in allBest])
     sys.stdout.write("\n")
     scores = evaluate.evaluateSets(allGoldBounds,allBestBounds)
-    sys.stdout.write("all token-f: %.2f (of %d)\n"%(evaluate.evaluateSets(allGoldWords,allBestWords)[2],len(allGoldWords)))
+    sys.stdout.write("all token-f: %.2f (of %d, avg length=%.2f)\n"%(evaluate.evaluateSets(allGoldWords,allBestWords)[2],len(allGoldWords),sum(len(x.replace(" ","")) for x in goldsents)/float(len(goldsents))))
     sys.stdout.write("all boundary-p: %.2f\nall boundary-r: %.2f\n"%(scores[0],scores[1]))
     sys.stdout.write("all lexic-p: %.2f (of %d)\n"%(evaluate.evaluate_ind(allGoldTypes,allBestTypes)[0],len(allBestTypes)))
     for threshold in thresholds:
@@ -107,6 +109,6 @@ if __name__=="__main__":
         entropyWords = [evaluate.words(x[0]) for x in entropyBest[threshold]]
         entropyGoldTypes = evaluate.types([goldsents[x[1]] for x in entropyBest[threshold]])
         entropyTypes = evaluate.types([x[0] for x in entropyBest[threshold]])
-        sys.stdout.write("%.2f token-f: %.2f (of %d)\n"%(threshold/10.0,evaluate.evaluateSets(entropyGoldWords,entropyWords)[2],len(entropyBest[threshold])))
+        sys.stdout.write("%.2f token-f: %.2f (of %d, avg length=%.2f)\n"%(threshold/10.0,evaluate.evaluateSets(entropyGoldWords,entropyWords)[2],len(entropyBest[threshold]),sum(len(goldsents[x[1]].replace(" ","")) for x in entropyBest[threshold])/float(len(entropyBest[threshold]))))
         sys.stdout.write("  %.2f lexic-p: %.2f (of %d)\n"%(threshold/10.0,evaluate.evaluate_ind(entropyGoldTypes,entropyTypes)[0],len(entropyTypes)))
         
