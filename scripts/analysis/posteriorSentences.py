@@ -36,16 +36,6 @@ def incr2(hm,i,k):
         hm[i] = {}
         hm[i][k] = hm[i].get(k,0)+1
 
-def sToLex(x):
-    counts = {}
-    for u in x.split("|"):
-        for w in u.split(" "):
-            incr(counts,w)
-    res = []
-    for (w,c) in sorted(counts.iteritems(),lambda x,y:-cmp(x[1],y[1])):
-        res.append("%s: %d"%(w,c))
-    return ", ".join(res)
-
 def entropy(l):
     res = 0
     for p in l:
@@ -55,6 +45,8 @@ def entropy(l):
     else:
         return -res
 
+
+thresholds = [1,10,20]
 
 if __name__=="__main__":
     goldsents = [x.strip() for x in open(sys.argv[1])]
@@ -66,7 +58,7 @@ if __name__=="__main__":
     s = []
     i = 0
     for l in sys.stdin:
-        l = l.strip().replace(" ","").replace("|"," ")
+        l = l.strip()
         if len(l)==0:
             i = 0
         else:
@@ -74,16 +66,16 @@ if __name__=="__main__":
             i+=1
 
     allBest = []
-    entropyBest = [[] for i in range(6)]
+    entropyBest = {i: [] for i in thresholds}
     for i in counts.keys():
-        goldwb = evaluate.words(goldsents[i].replace(".",""))
+        goldwb = evaluate.words(goldsents[i])
         norm = float(sum(counts[i].values()))
         ent = entropy([x / norm for x in counts[i].values()])
         highestseg = max(counts[i].iteritems(),key=lambda x:x[1])[0]
-        allBest.append((highestseg.replace(".",""),i))
-        for threshold in [1,2,3,4,5]:
+        allBest.append((highestseg,i))
+        for threshold in thresholds:
             if ent < threshold/10.0:
-                entropyBest[threshold].append((highestseg.replace(".",""),i))
+                entropyBest[threshold].append((highestseg,i))
         highestwb = evaluate.words(highestseg)
         expectedF = 0
         tmpFscores = []
@@ -91,11 +83,14 @@ if __name__=="__main__":
             predwb = evaluate.words(seg.replace(".",""))
             tmpFscores.append(evaluate.evaluate_ind(goldwb,predwb)[2])
             expectedF += count/norm*tmpFscores[-1]
-        sys.stdout.write("sent %d, %.3f, %.2f (%.2f), %s\n"%(i,ent,evaluate.evaluate_ind(goldwb,highestwb)[2],expectedF,highestseg))
+        sys.stdout.write("sent %d, %.3f, %.3f, %.2f (%.2f), %s\n"%(i,ent,ent/len(goldsents[i].replace(" ","")),evaluate.evaluate_ind(goldwb,highestwb)[2],expectedF,goldsents[i]))
         for (seg,count) in sorted(counts[i].iteritems(),lambda x,y:-cmp(x[1],y[1])):
-            predwb = evaluate.words(seg.replace(".",""))
+            predwb = evaluate.words(seg)
             tf = evaluate.evaluate_ind(goldwb,predwb)[2]
-            sys.stdout.write("  %.2f %d %.2f\t%s\n"%(count/norm,count,tf,seg))
+            if seg == goldsents[i]:
+                sys.stdout.write("->%.2f %d %.2f\t%s\n"%(count/norm,count,tf,seg))
+            else:
+                sys.stdout.write("  %.2f %d %.2f\t%s\n"%(count/norm,count,tf,seg))
     allGoldWords = [evaluate.words(goldsents[x[1]]) for x in allBest]
     allGoldBounds = [evaluate.wbs(goldsents[x[1]]) for x in allBest]
     allBestWords = [evaluate.words(x[0]) for x in allBest]
@@ -107,11 +102,11 @@ if __name__=="__main__":
     sys.stdout.write("all token-f: %.2f (of %d)\n"%(evaluate.evaluateSets(allGoldWords,allBestWords)[2],len(allGoldWords)))
     sys.stdout.write("all boundary-p: %.2f\nall boundary-r: %.2f\n"%(scores[0],scores[1]))
     sys.stdout.write("all lexic-p: %.2f (of %d)\n"%(evaluate.evaluate_ind(allGoldTypes,allBestTypes)[0],len(allBestTypes)))
-    for threshold in [1,2,3,4,5]:
+    for threshold in thresholds:
         entropyGoldWords = [evaluate.words(goldsents[x[1]]) for x in entropyBest[threshold]]
         entropyWords = [evaluate.words(x[0]) for x in entropyBest[threshold]]
         entropyGoldTypes = evaluate.types([goldsents[x[1]] for x in entropyBest[threshold]])
         entropyTypes = evaluate.types([x[0] for x in entropyBest[threshold]])
         sys.stdout.write("%.2f token-f: %.2f (of %d)\n"%(threshold/10.0,evaluate.evaluateSets(entropyGoldWords,entropyWords)[2],len(entropyBest[threshold])))
-#        sys.stdout.write("  %.2f lexic-p: %.2f (of %d)\n"%(threshold/10.0,evaluate.evaluate_ind(entropyGoldTypes,entropyTypes)[0],len(entropyTypes)))
+        sys.stdout.write("  %.2f lexic-p: %.2f (of %d)\n"%(threshold/10.0,evaluate.evaluate_ind(entropyGoldTypes,entropyTypes)[0],len(entropyTypes)))
         
