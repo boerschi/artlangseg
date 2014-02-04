@@ -15,7 +15,7 @@
 """
 
 import sys, evaluate
-from math import log
+from math import log,sqrt
 
 l2norm = log(2)
 
@@ -46,6 +46,11 @@ def entropy(l):
         return -res
 
 
+def statAn(l):
+    mean = sum(l)/float(len(l))
+    sd = sqrt(sum((x-mean)**2 for x in l)/len(l))
+    return "mean=%.3f, sd=%.3f, min=%.3f, max=%.3f"%(mean,sd,min(l),max(l))
+
 thresholds = [1,10,20]
 
 if __name__=="__main__":
@@ -68,11 +73,12 @@ if __name__=="__main__":
     allBest = []
     entropyBest = {}
     for i in thresholds: entropyBest[i]=[]
-
+    allEntropies = []
     for i in counts.keys():
         goldwb = evaluate.words(goldsents[i])
         norm = float(sum(counts[i].values()))
         ent = entropy([x / norm for x in counts[i].values()])
+        allEntropies.append(ent)
         highestseg = max(counts[i].iteritems(),key=lambda x:x[1])[0]
         allBest.append((highestseg,i))
         for threshold in thresholds:
@@ -101,6 +107,7 @@ if __name__=="__main__":
     allBestTypes = evaluate.types([x[0] for x in allBest])
     sys.stdout.write("\n")
     scores = evaluate.evaluateSets(allGoldBounds,allBestBounds)
+    sys.stdout.write("entropy: %s\n"%statAn(allEntropies))
     sys.stdout.write("all token-f: %.2f (of %d, avg length=%.2f)\n"%(evaluate.evaluateSets(allGoldWords,allBestWords)[2],len(allGoldWords),sum(len(x.replace(" ","")) for x in goldsents)/float(len(goldsents))))
     sys.stdout.write("all boundary-p: %.2f\nall boundary-r: %.2f\n"%(scores[0],scores[1]))
     sys.stdout.write("all lexic-p: %.2f (of %d)\n"%(evaluate.evaluate_ind(allGoldTypes,allBestTypes)[0],len(allBestTypes)))
