@@ -41,7 +41,7 @@ BURNINSKIP=0.8
 PYFLAGS=-d 10 -P
 
 # OUTS is a list of types of output files we're going to produce
-OUTS=trscore
+OUTS=trscore entropy
 
 # Each fold is a different run; to do 8 runs set FOLDS=0 1 2 3 4 5 6 7
 #FOLDS=01 02
@@ -49,7 +49,7 @@ FOLDS=01 02 03 04
 
 # PYCFG is the py-cfg program (including its path)
 #
-PYCFG=./py-cfg/py-cfg
+PYCFG=./py-cfg/py-cfg-quad
 
 
 # see PYCFG help for explanation
@@ -127,6 +127,10 @@ getarg=$(patsubst $(1)%,%,$(filter $(1)%,$(subst _, ,$(2))))
 keyword=$(patsubst $(1),-$(1),$(filter $(1),$(subst _, ,$(2))))
 
 GRAMMARFILES=$(foreach g,$(GRAMMAR),$(TMPDIR)/$(g).gr)
+
+#perform posterior analysis from sample files
+$(EVALDIR)/%.entropy: $(foreach fold,$(FOLDS),$(TMPDIR)/%_fold$(fold).trsws)
+	cat $^ | python scripts/analysis/posteriorSentences.py $(GOLDFILE) > $@
 
 #calculate scores from the average parses, i.e. from doing MBR decoding across multiple samples
 $(EVALDIR)/$(OUTPUTPREFIX)_%.trscore: $(TMPDIR)/$(OUTPUTPREFIX)_%.travprs prog_seg/eval.py
