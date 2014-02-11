@@ -52,9 +52,15 @@
   word length, and word segmentation.
 \end{abstract}
 
+
 \section{Introduction}
 
-this section frames the research question and motivates the research approach
+Word segmentation is the perceptual process by which infant and adult listeners parse the continuous speech signal into a sequence of discrete, word-like units. The acquisition of word segmentation has been the subject of intense computational scrutiny, where it is typically operationalized as the unsupervised partitioning of a phonemically transcribed, child-directed corpus, and assessed against an orthographically derived gold standard~\cite{GGJ09,DP11,PearlEtAl11}.
+
+Recent years have seen a number of crosslinguistic modeling studies converging on the same conclusion. Across a typologically diverse range of languages (e.g. Arabic, Japanese, Korean, Russian, and Spanish), and across a range of models (lexical, phonotactic, and hybrid), better segmentation is unfailingly predicted for English than for other languages \cite{Fleck08,Daland09,DP11,FourtassiEtAl13,DalandZuraw13}. One possible way to interpret this fact is as evidence of the insufficiency of the models. After all, the developmental trajectory of language acquisition is empirically known to be remarkably robust to cross-linguistic variation in related domains like phonetic categorization~\cite{ref} and meter/prosody/accentuation~\cite{ref}. On the other hand, there is considerably less cross-linguistic work on word segmentation in infants, and the available work is consistent with the alternative hypothesis, e.g. later segmentation of function words by French-acquiring infants than English-acquiring ones.~\cite{ref}. On balance, then, existing work suggests that languages genuinely differ in segmentability (i.e. the predicted ease/accuracy with which infants might learn to segment speech in that language).
+
+Recently, it was proposed in two independent studies that cross-linguistic differences in segmentability may arise in part or in whole from language-specific phonotactics. Daland and Zuraw~\shortcite{DalandZuraw13} investigated the segmentability of Korean using a phonotactic segmentation model~\cite{DP11}. Korean possesses many edge-sensitive phonological processes, so one might naturally think that segment sequences would be distinct across word boundaries versus within words; the authors found that overall, this didn't hold. For example, vowel-vowel (hiatus) sequences are tolerated within words in Korean, while vowels are also common both word-initially and in word-final inflections; thus hiatus is not a good boundary cue in Korean (though it is in English). Fourtassi et al.~\shortcite{FourtassiEtAl13} investigated the segmentability of Japanese using a lexical segmentation model~\cite{GGJ09}. They found ...
+
 
 \section{Methods}
 
@@ -66,7 +72,7 @@ this section describes what we found
 
 \begin{table}[h]
 \begin{center}
-\begin{tabular}{c||c|cccccc}
+\begin{tabular}{|c||c|cccccc|}
   \hline
   Language & *Struct & brent & zipf16 & zipf12 & linear & flat & point \\
   \hline
@@ -77,6 +83,7 @@ this section describes what we found
   Berber & 1 & .93 & .85 & .91 & .70 & .62 & .20 \\
   Berber & 2 & .95 & .75 & .92 & .78 & .73 & .21 \\
   Berber & 3 & .95 & .62 & .87 & .93 & .91 & .20 \\
+  \hline
 \end{tabular}
 \end{center}
 \caption{\label{Results.}}
@@ -106,6 +113,38 @@ conform to these requirements may be rejected without review.
 %\bibliography{acl2014}
 
 \begin{thebibliography}{}
+
+\bibitem[\protect\citename{Pearl, Goldwater, and Steyvers, 2011}]{PearlEtAl11}
+Lisa Pearl, Sharon Goldwater, and Mark Steyvers.
+\newblock 2011.
+\newblock {\em Research on Language and Computation}, 8(2):107--132.
+\newblock DOI 10.1007/s11168-011-9074-5.
+
+\bibitem[\protect\citename{Goldwater, Griffiths, and Johnson, 2009}]{GGJ09}
+Sharon Goldwater, Thomas L. Griffiths, and Mark Johnson.
+\newblock 2009.
+\newblock {\em Cognition}, 112:21--54.
+
+\bibitem[\protect\citename{Daland and Pierrehumbert, 2011}]{DP11}
+Robert Daland and Janet~B. Pierrehumbert.
+\newblock 2011.
+\newblock {\em Cognitive Science}, 35(1):119--155.
+
+\bibitem[\protect\citename{what appears in the text}]{how you label it}
+Authors.
+\newblock date.
+\newblock {\em to italicize}, deets.
+
+\bibitem[\protect\citename{what appears in the text}]{how you label it}
+Authors.
+\newblock date.
+\newblock {\em to italicize}, deets.
+
+\bibitem[\protect\citename{what appears in the text}]{how you label it}
+Authors.
+\newblock date.
+\newblock {\em to italicize}, deets.
+
 
 \bibitem[\protect\citename{Aho and Ullman}1972]{Aho:72}
 Alfred~V. Aho and Jeffrey~D. Ullman.
