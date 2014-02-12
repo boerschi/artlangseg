@@ -55,13 +55,13 @@
 
 \section{Introduction}
 
-Word segmentation is the perceptual process by which infant and adult listeners parse the continuous speech signal into a sequence of discrete, word-like units. The acquisition of word segmentation has been the subject of intense computational scrutiny, where it is typically operationalized as the unsupervised partitioning of a phonemically transcribed, child-directed corpus, and assessed against an orthographically derived gold standard~\cite{GGJ09,DP11,PearlEtAl11}.
+Word segmentation is the perceptual process by which infant and adult listeners parse the continuous speech signal into a sequence of discrete, word-like units. The acquisition of word segmentation has been the subject of intense computational scrutiny, where it is typically operationalized as the unsupervised partitioning of a phonemically transcribed, child-directed corpus, and assessed against an orthographically derived gold standard~\cite{Goldwater09a,Daland11a,Pearl10b}.
 
-Recent years have seen a number of crosslinguistic modeling studies converging on the same conclusion. Across a typologically diverse range of languages (e.g. Arabic, Japanese, Korean, Russian, and Spanish), and across a range of models (lexical, phonotactic, and hybrid), better segmentation is unfailingly predicted for English than for other languages \cite{Fleck08,Daland09,DP11,FourtassiEtAl13,DalandZuraw13}. One possible way to interpret this fact is as evidence of the insufficiency of the models. After all, the developmental trajectory of language acquisition is empirically known to be remarkably robust to cross-linguistic variation in related domains like phonetic categorization~\cite{ref} and meter/prosody/accentuation~\cite{ref}. On the other hand, there is considerably less cross-linguistic work on word segmentation in infants, and the available work is consistent with the alternative hypothesis, e.g. later segmentation of function words by French-acquiring infants than English-acquiring ones.~\cite{ref}. On balance, then, existing work suggests that languages genuinely differ in segmentability (i.e. the predicted ease/accuracy with which infants might learn to segment speech in that language).
+Recent years have seen a number of crosslinguistic modeling studies converging on the same conclusion. Across a typologically diverse range of languages (e.g. Arabic, Japanese, Korean, Russian, and Spanish), and across a range of models (lexical, phonotactic, and hybrid), better segmentation is unfailingly predicted for English than for other languages \cite{Fleck08a,Daland09a,Daland11a,Fourtassi13a,Daland13a}. One possible way to interpret this fact is as evidence of the insufficiency of the models. After all, the developmental trajectory of language acquisition is empirically known to be remarkably robust to cross-linguistic variation in related domains like phonetic categorization~\cite{ref} and meter/prosody/accentuation~\cite{ref}. On the other hand, there is considerably less cross-linguistic work on word segmentation in infants, and the available work is consistent with the alternative hypothesis, e.g. later segmentation of function words by French-acquiring infants than English-acquiring ones.~\cite{ref}. On balance, then, existing work suggests that languages genuinely differ in segmentability (i.e. the predicted ease/accuracy with which infants might learn to segment speech in that language).
 
-Recently, it was proposed in two independent studies that cross-linguistic differences in segmentability may arise in part or in whole from language-specific phonotactics. Daland and Zuraw~\shortcite{DalandZuraw13} investigated the segmentability of Korean using a phonotactic segmentation model~\cite{DP11}. Korean possesses many edge-sensitive phonological processes, so one might naturally think that segment sequences would be distinct across word boundaries versus within words; the authors found that overall, this didn't hold. For example, vowel-vowel (hiatus) sequences are tolerated within words in Korean, while vowels are also common both word-initially and in word-final inflections; thus hiatus is not a good boundary cue in Korean (though it is in English). Fourtassi et al.~\shortcite{FourtassiEtAl13} investigated the segmentability of Japanese using a lexical segmentation model~\cite{GGJ09}. Japanese lexical items often consist of multiple sub-parts, which are themselves phonologically acceptable as words, e.g. \textit{katakana} `framentary characters'; cf. \textit{kana} `character'. Fourtassi et al. found that the comparatively poor segmentability of Japanese was strongly predicted by the `normalized segmentation entropy' of a corpus, the average (per-character) entropy over all licit segmentations of a corpus given the gold standard lexicon. Both Daland and Zuraw and Fourtassi et al. speculated that the ultimate source of the poor segmentability of these languages lay in their restrictive phonotactics.
+Recently, it was proposed in two independent studies that cross-linguistic differences in segmentability may arise in part or in whole from language-specific phonotactics. Daland and Zuraw~\shortcite{Daland13a} investigated the segmentability of Korean using a phonotactic segmentation model~\cite{Daland11a}. Korean possesses many edge-sensitive phonological processes, so one might naturally think that segment sequences would be distinct across word boundaries versus within words; the authors found that overall, this didn't hold. For example, vowel-vowel (hiatus) sequences are tolerated within words in Korean, while vowels are also common both word-initially and in word-final inflections; thus hiatus is not a good boundary cue in Korean (though it is in English). Fourtassi et al.~\shortcite{Fourtassi13a} investigated the segmentability of Japanese using a lexical segmentation model~\cite{Goldwater09a}. Japanese lexical items often consist of multiple sub-parts, which are themselves phonologically acceptable as words, e.g. \textit{katakana} `framentary characters'; cf. \textit{kana} `character'. Fourtassi et al. found that the comparatively poor segmentability of Japanese was strongly predicted by the `normalized segmentation entropy' of a corpus, the average (per-character) entropy over all licit segmentations of a corpus given the gold standard lexicon. Both Daland and Zuraw and Fourtassi et al. speculated that the ultimate source of the poor segmentability of these languages lay in their restrictive phonotactics.
 
-The present study seeks to test this proposal by applying an Adaptor Grammar-based segmentation model~\cite{GGJ09} to artificially generated corpora. Artificial corpora are used here for the same reason that psycholinguistic experiments used carefully controlled stimuli rather than randomly sampled natural production: natural language corpora vary in a number of ways, arising from complex and potentially not understood relationships between interacting language properties. One example of a property that must be controlled is the word frequency distribution. It stands to reason that the word frequency distribution might differ between, e.g., Japanese and English for essentially syntactic reasons. Overt subjects are normally obligatory in English, so subject and object pronouns tend to make up a large noticable proportion of the total frequency. In contrast, discourse-salient subjects and objects are typically omitted in Japanese, so pronoun-like elements will likely make up a smaller proportion of the total frequency in Japanese corpora. As Adaptor Grammars adopt particular assumptions about the word frequency distribution of a language, it stands to reason that this language property will affect the segmentability of an English or a Japanese corpus, quite apart from the phonotactic properties. By generating artificial corpora, it is possible to vary the phonotactic properties while holding the word frequency distribution constant. It is also possible to investigate the effect of the word frequency distribution. In fact, this is exactly what the present paper does.
+The present study seeks to test this proposal by applying the popular Unigram model~\cite{Brent99a,Goldwater09a} to artificially generated corpora. Artificial corpora are used here for the same reason that psycholinguistic experiments used carefully controlled stimuli rather than randomly sampled natural production: natural language corpora vary in a number of ways, arising from complex and potentially not understood relationships between interacting language properties. One example of a property that must be controlled is the word frequency distribution. It stands to reason that the word frequency distribution might differ between, e.g., Japanese and English for essentially syntactic reasons. Overt subjects are normally obligatory in English, so subject and object pronouns tend to make up a large noticable proportion of the total frequency. In contrast, discourse-salient subjects and objects are typically omitted in Japanese, so pronoun-like elements will likely make up a smaller proportion of the total frequency in Japanese corpora. As Adaptor Grammars adopt particular assumptions about the word frequency distribution of a language, it stands to reason that this language property will affect the segmentability of an English or a Japanese corpus, quite apart from the phonotactic properties. By generating artificial corpora, it is possible to vary the phonotactic properties while holding the word frequency distribution constant. It is also possible to investigate the effect of the word frequency distribution. In fact, this is exactly what the present paper does.
 
 Two artificial languages were created, representing extremes of phonotactic permissiveness and restrictiveness. Pseudo-Senufo is a strict CV grammar -- words must begin with a consonant and end with a vowel; no consonant-consonant or vowel-vowel sequences are permitted; and otherwise every possible sequence of $(CV)^*$ is grammatical. Pseudo-Berber has no phonotactic constraints whatsoever; every possible sequence of consonants and vowels is grammatical. Both grammars were defined over the same segmental inventory, intended to represent a fairly minimal but cross-linguistically typical inventory (see Methods). In addition to the language manipulation (Berber vs. Senufo) and the word frequency distribution manipulation (described in more detail below), a final manipulation was to impose varying degrees of penalty on word length. This was done for a purely practical reason, to prevent overly long words from dominating the artificial lexicons; although the length penalty manipulation proved interesting.
 
@@ -103,64 +103,8 @@ can use the command \verb|\newcite| to get ``author (year)'' citations.
 
 
 % include your own bib file like this:
-%\bibliographystyle{acl}
-%\bibliography{acl2014}
+\bibliographystyle{acl}
+\bibliography{acl}
 
-\begin{thebibliography}{}
-
-\bibitem[\protect\citename{Pearl, Goldwater, and Steyvers, 2011}]{PearlEtAl11}
-Lisa Pearl, Sharon Goldwater, and Mark Steyvers.
-\newblock 2011.
-\newblock Online learning mechanisms for Bayesian models of word segmentation.
-\newblock {\em Research on Language and Computation}, 8(2):107--132.
-\newblock DOI 10.1007/s11168-011-9074-5.
-
-\bibitem[\protect\citename{Goldwater, Griffiths, and Johnson, 2009}]{GGJ09}
-Sharon Goldwater, Thomas~L. Griffiths, and Mark Johnson.
-\newblock 2009.
-\newblock A Bayesian framework for word segmentation:
-    Exploring the effects of context.
-\newblock {\em Cognition}, 112:21--54.
-
-\bibitem[\protect\citename{Daland and Pierrehumbert, 2011}]{DP11}
-Robert Daland and Janet~B. Pierrehumbert.
-\newblock 2011.
-\newblock Learning diphone-based segmentation.
-\newblock {\em Cognitive Science}, 35(1):119--155.
-
-\bibitem[\protect\citename{Fleck, 2008}]{Fleck08}
-Margaret~M. Fleck.
-\newblock 2008.
-\newblock Lexicalized phonotactic word-segmentation.
-\newblock {\em Proceedings of the 45th ACL}, HLT:130--138.
-
-\bibitem[\protect\citename{Daland, 2009}]{Daland09}
-Roert Daland.
-\newblock 2009.
-\newblock {\em Word segmentation, word recognition, and word learning:
-    a computational model of first language acquisition.}
-\newblock PhD Dissertation, Northwestern University.
-
-\bibitem[\protect\citename{Fourtassi et al., 2013}]{FourtassiEtAl2013}
-Abdellah Fourtassi, Benjamin Borschinger, Mark Johnson, and Emmanuel Dupoux.
-\newblock 2013.
-\newblock whyisenglishsoeasytosegment?
-\newblock {\em Proceedings of the Workshop on Cognitive Modeling and
-     Computational Linguistics, August 8, 2013, Sofia, Bulgaria}, CMCL:1--10.
-
-\bibitem[\protect\citename{Daland and Zuraw, 2013}]{DalandZuraw2013}
-Robert Daland and Kie Zuraw.
-\newblock 2013.
-\newblock Does Korean defeat phonotactic word segmentation?
-\newblock {\em Proceedings of the 51st ACL in Sofia, Bulgaria.}.
-
-%\bibitem[\protect\citename{what appears in the text}]{how you label it}
-%Authors.
-%\newblock date.
-%\newblock title
-%\newblock {\em to italicize}, deets.
-
-
-\end{thebibliography}
 
 \end{document}
