@@ -5,6 +5,7 @@
 \usepackage{times}
 \usepackage{url}
 \usepackage{latexsym}
+\usepackage{phonetic}
 
 %\setlength\titlebox{5cm}
 
@@ -67,7 +68,15 @@ Two artificial languages were created, representing extremes of phonotactic perm
 
 \section{Methods}
 
-this section describes what we actually did
+\subsection{Phonotactic grammars}
+
+The alphabet \Sigma used here was intended to represent a small but standard segmental inventory, including plain stops at 3 major places of articulation [ptk], corresponding fricatives [fsx] and nasals [mn\engma], basic liquids [lr] and glides [jw], and a standard 5-vowel inventory [aeiou]. These segments were assigned standard phonological feature values, e.g. [f] is [-son,+cont,+lab], while [a] is [+syl,+low]. In the implementation, strings are space-separated, e.g. `s t r i \engma'.
+
+A \textit{phonotactic grammar} \mu over an alphabet \Sigma defines a probability distribution over \Sigma$^*$, i.e. it is a function $\mu : \Sigma^* \rightarrow [0,1]$ which assigns a probability to every string in \Sigma$^*$ (the set of finite strings over \Sigma). Here, the phonotactic grammar was defined using constraints stated over $n$-gram feature matrices, following the format of regular expressions. For example, the constraint `^[+syl]' penalizes words which begin with a vowel (often called \textsc{Onset} in the phonological literature). Each constraint is associated with a weight, and the `harmony' of a string is the weighted sum of its constraint violations. This defines a log-linear model, from which the probability of a string can be calculated exactly ~\cite{Hayes08a}. The maximum string length was 6 in the present paper.
+
+The grammar of Pseudo-Senufo contains an \textsc{Onset} constraint `^[+syl]', a \textsc{NoCoda} constraint '[-syl]\$', a constraint banning consonant clusters `[-syl] [-syl]', and a constraint banning vowel hiatus `[+syl] [+syl]'. Each of these was given a very strong weight (-25), sufficient to categorically rule out violating forms, thereby enforcing a strict CV syllable structure. In addition, Pseudo-Senufo contained a \textsc{*Struct} constraint '[]' which penalized words according to how many segments they contained. This constraint was given a smaller weight (between -1 and -5), which was manipulated to control the average word length and lexical saturation.
+
+The grammar of Pseudo-Berber contained only the \textsc{Struct} constraint, so that any string was a possible word, no matter how difficult to pronounce.
 
 \section{Results}
 
