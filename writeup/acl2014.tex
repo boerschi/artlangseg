@@ -4,6 +4,7 @@
 \usepackage{acl2014}
 \usepackage{multirow}
 \usepackage{times}
+\usepackage[tone]{tipa}
 \usepackage{url}
 \usepackage{latexsym}
 \usepackage{phonetic}
@@ -20,20 +21,19 @@
   and frequency skew on segmentability}
 
 \author{Benjamin B{\"o}rschinger \\
-    Department of Computing \\
-    Macquarie University \\\And
-  Robert Daland \\
+    Macquarie University\\
+    Heidelberg University \And
+    Robert Daland \\
     Linguistics \\
-    UCLA \\
-    {\tt benjamin.borschinger@mq.edu.au} \\\And
-  Abdellah Fourtassi \\
+    UCLA \And
+    Abdellah Fourtassi \\
     LCSP \\
-    ENS/EHESS/CNRS \\
-    \\
-    {\tt \{r.daland\,abdellah.fourtassi\,emmanuel.dupoux\}@gmail.com} \\\And
-  Emmanuel Dupoux \\
+    ENS/EHESS/CNRS \And
+    Emmanuel Dupoux \\
     LCSP \\
-    ENS/EHESS/CNRS }
+    ENS/EHESS/CNRS\AND
+    {\tt benjamin.borschinger@mq.edu.au}\\
+    {\tt \{r.daland$\mid$abdellah.fourtassi$\mid$emmanuel.dupoux\}@gmail.com}}
 
 \date{}
 
@@ -54,26 +54,23 @@
 
 
 \section{Introduction}
-
+\vspace*{-5pt}
 Word segmentation is the perceptual process by which infant and adult listeners parse the continuous speech signal into a sequence of discrete, word-like units. The acquisition of word segmentation has been the subject of intense computational scrutiny, where it is typically operationalized as the unsupervised partitioning of a phonemically transcribed, child-directed corpus, and assessed against an orthographically derived gold standard~\cite{Goldwater09a,Daland11a,Pearl10b}.
 
-A number of modeling studies indicates that across a typologically diverse range of languages (e.g. Arabic, Japanese, Korean, Russian, and Spanish), and across a range of models (lexical, phonotactic, and hybrid), better segmentation is unfailingly found for English than for other languages \cite{Fleck08a,Daland09a,Daland11a,Fourtassi13a,Daland13a}. The empirical data bearing on this point is sparse, and occasionally conflicting \cite{Nazzi06a,Nazzi14a}. Therefore, while current models may be insufficient, it seems worth considering the possibility that languages genuinely differ in their intrinsic ease of segmentation.
-
-Along those lines, Daland and Zuraw~\shortcite{Daland13a} investigated the segmentability of Korean using a phonotactic segmentation model~\cite{Daland11a}, finding that Korean's many edge-sensitive phonological processes did not help word segmentation. Fourtassi et al.~\shortcite{Fourtassi13a} compared the segmentability of Japanese and English using lexical segmentation models~\cite{Goldwater09a,Johnson09a} and argued that the comparatively poor segmentability of Japanese was strongly predicted by the `normalized segmentation entropy' of a corpus, the average (per-character) entropy over all licit segmentations of a corpus given the gold standard lexicon. Both Daland and Zuraw and Fourtassi et al. speculated that the poor segmentability of these languages bears close connection to their restrictive phonotactics.
+A number of modeling studies indicates that across a typologically diverse range of languages (e.g. Arabic, Japanese, Korean, Russian, and Spanish), and across a range of models (lexical, phonotactic, and hybrid), better segmentation is unfailingly found for English than for other languages \cite{Fleck08a,Daland09a,Daland11a,Fourtassi13a,Daland13a}. The empirical data bearing on this point is sparse, and occasionally conflicting \cite{Nazzi06a,Nazzi14a}. Therefore, while current models may be insufficient, it seems worth considering the possibility that languages genuinely differ in their intrinsic ease of segmentation. Along those lines, Daland and Zuraw~\shortcite{Daland13a} investigated the segmentability of Korean using a phonotactic segmentation model~\cite{Daland11a}, finding that Korean's many edge-sensitive phonological processes did not help word segmentation. Fourtassi et al.~\shortcite{Fourtassi13a} compared the segmentability of Japanese and English using lexical segmentation models~\cite{Goldwater09a,Johnson09a} and argued that the comparatively poor segmentability of Japanese was strongly predicted by the `normalized segmentation entropy' of a corpus, the average (per-character) entropy over all licit segmentations of a corpus given the gold standard lexicon. Both Daland and Zuraw and Fourtassi et al. speculated that the poor segmentability of these languages bears close connection to their restrictive phonotactics.
 
 The present study seeks to test this proposal by applying a popular Bayesian word segmentation model~\cite{Brent99a,Goldwater07c,Goldwater09a} to artificially generated corpora. Artificial corpora are used here for the same reason that psycholinguistic experiments use carefully controlled stimuli: natural language corpora variation arises from complex and potentially not understood relationships between interacting language properties. For example, it stands to reason that the word frequency distribution might differ between, e.g., Japanese and English for essentially syntactic (and morphological) reasons. By generating artificial corpora, it is possible to vary one property (phonotactics, frequency distributions, word lengths) while holding other factors constant, controlling (to a certain extent) the impact of these additional factors. In fact, this is exactly what the present paper does.
 
 \section{Methods}
+\vspace*{-5pt}
 Two artificial grammars were created, representing extremes of phonotactic permissiveness and restrictiveness. Pseudo-Senufo is a strict CV grammar -- words must begin with a consonant and end with a vowel.
 Pseudo-Berber has no phonotactic constraints whatsoever -- every possible sequence of consonants and vowels is grammatical. Artificial lexicons were generated for each grammar as a sample from the space of phonotactically licit forms; average word length (and lexical saturation) were manipulated using a gradient penalty (see below). From a generated lexicon, a corpus was generated by imposing a word frequency distribution. The word frequency distribution can be manipulated (see below); thus, this generation dissociates phonotactic properties from word frequency distribution properties.
  
 \subsection{Generating lexicons from phonotactic grammars}
 
-A \textit{phonotactic grammar} assigns a probability distribution over possible lexical items ($\mu : \Sigma^* \rightarrow [0,1]$). The alphabet $\Sigma$ used here defined a small but standard segmental inventory: [ptk|fsx|mn$\engma$|lr|wj|aeiou]. Phonotactic grammars were defined using the maximum entropy harmonic grammar framework~\cite{Hayes08a}: `features' are constraints penalizing particular dimensions of ill-formedness (e.g. the constraint \textsc{Onset} penalizes words which begin with a vowel). Each constraint is associated with a weight, and the `harmony' of a string is the weighted sum of its constraint violations. The log-odds of two forms is the difference in their harmonies, which is sufficient to determine a log-linear model. Thus, a collection of constraints and their weights serves to define a phonotactic grammar.
+A \textit{phonotactic grammar} assigns a probability distribution over possible lexical items ($\mu:~\Sigma^* \rightarrow[0,1]$). The alphabet $\Sigma$ used here defined a small but standard segmental inventory: [ptk|fsx|mn\textipa{N}|lr|wj|aeiou]. Phonotactic grammars were defined using the maximum entropy harmonic grammar framework~\cite{Hayes08a}: `features' are constraints penalizing particular dimensions of ill-formedness (e.g. the constraint \textsc{Onset} penalizes words which begin with a vowel). Each constraint is associated with a weight, and the `harmony' of a string is the weighted sum of its constraint violations. The log-odds of two forms is the difference in their harmonies, which is sufficient to determine a log-linear model. Thus, a collection of constraints and their weights serves to define a phonotactic grammar.
 
-A \textit{lexicon} is generated as a sample (without replacement) from the probability distribution defined by a phonotactic grammar, i.e. a list of $n$ distinct word types. For tractability, a hard maximum string length of 6 was imposed on lexical forms (i.e. $\Sigma^* \to \Sigma^{\leq 6}$).
-
-The Pseudo-Senufo grammar included 4 constraints favoring a CV syllable structure (\textsc{Onset, *Coda, *Hiatus, *Complex}). These constraints were given a sufficiently high weight (-25) as to categorically enforce a CV structure in sample lexicons. It also includes a constraint, \textsc{*Struct}, which penalizes words according to their length, gradiently favoring shorter words. The weight of \textsc{*Struct} was manipulated, yielding varying degrees of pressure for Pseudo-Senufo grammars to `saturate' the space of phonotactically licit short forms. The Pseudo-Berber grammar included only \textsc{*Struct}, allowing any sequence of segments as a licit word-form (`phoneme salad'). 
+A \textit{lexicon} is generated as a sample (without replacement) from the probability distribution defined by a phonotactic grammar, i.e. a list of $n$ distinct word types. For tractability, a hard maximum string length of 6 was imposed on lexical forms (i.e. $\Sigma^* \to \Sigma^{\leq 6}$). The Pseudo-Senufo grammar included 4 constraints favoring a CV syllable structure (\textsc{Onset, *Coda, *Hiatus, *Complex}). These constraints were given a sufficiently high weight (-25) as to categorically enforce a CV structure in sample lexicons. It also includes a constraint, \textsc{*Struct}, which penalizes words according to their length, gradiently favoring shorter words. The weight of \textsc{*Struct} was manipulated, yielding varying degrees of pressure for Pseudo-Senufo grammars to `saturate' the space of phonotactically licit short forms. The Pseudo-Berber grammar included only \textsc{*Struct}, allowing any sequence of segments as a licit word-form (`phoneme salad'). 
 
 \subsection{Generating a corpus from a lexicon}
 
@@ -86,103 +83,51 @@ The Bayesian model for word segmentation we use is a generative model for sequen
 Crucially, the DP prior favors lexicons that exhibit a Zipfian rich-get-richer dynamic with relatively few high-frequency items and a long tail of low-frequency items, penalizing degenerate solutions in which every utterance counts as its own word-type. Also, the model assumes that words within an utterance are independent, hence it can be seen as a Unigram language model over the infinite space of admissible words. The goal of learning on this view is identifying the finite number of words that provide a compact explanation of the unsegmented input. While the Unigram assumption has been shown to result in undersegmentation of frequent collocations, we chose this model for its simplicity and because the questions of this paper are by and large independent of this known shortcoming. In particular, our artificial languages fit the Unigram assumption by construction, allowing us to focus on phonotactics and word-frequency related issues.
 
 \section{Results}
+\vspace*{-5pt}
 Our experimental paradigm follows closely that of \cite{Johnson09a}. For each of our artificial corpora we run four independent Markov Chains for the Unigram model for 1000 iterations using the Adaptor Grammar software~\cite{Johnson07c}, using hyper-parameter sampling and calculating a single marginal maximum a posteriori segmentation for each utterance from the samples collected across all 4 chains during the last 200 iterations. We evaluate segmentation accuracy by calculating the token f-score according to the gold boundaries in the artificial corpora. Token f-score is the harmonic mean of token precision, i.e. the fraction of correctly identified tokens in the posited segmentation over all posited tokens, and token recall, i.e. the fraction of correctly recovered tokens over all tokens in the gold standard. 
 
 The results are given in Table~\ref{Results.}. Overall, pseudo-Berber seems to be segmented better than pseudo-Senufo, with its best token f-scores for \textsc{bbr} and \textsc{zipf} being 95\% and 92\% respectively, compared to 87\% and 83\% for pseudo-Senufo. Only in the highly unnatural \textsc{flat} condition, pseudo-Senufo peaks with 97\%, with pseudo-Berber only reaching 94\%. There also is a clear impact of the \textsc{*Struct} constraint that governs the average word lengths, although the importance of this constraint varies considerably. For \textsc{bbr}, pseudo-Senufo yields a token f-score of 80\%+x for all values of \textsc{*Struct} whereas pseudo-Berber drops to 59\% for \textsc{*Struct}=5 but yields a considerably higher token f-score than pseudo-Senufo for \textsc{*Struct} $<$ 4. The \textsc{zipf} condition seems to favour lower values of \textsc{*Struct} equally for both pseudo-Berber and pseudo-Senufo; again, pseudo-Berber attains the worst token f-score of 45\% (compared to 67\% for pseudo-Senufo) for \textsc{*Struct}=5. In contrast, \textsc{flat} looks like a mirror of \textsc{zipf}, yielding the overall best token f-scores for both pseudo-Berber and pseudo-Senufo for high values of \textsc{*Struct} and bad performance for smaller ones.
 
-%NOTE: \textit values are still running but seem to have converged, hence I included them to get an idea of what the complete table will look like
-%\begin{table*}[t!]
-%\begin{center}
-%\begin{tabular}{|c||c|cccccc|}
-%  \hline
-%  Language & *Struct & brent & zipf16 & zipf12 & linear & flat & point \\
-%  \hline
-%  Senufo & 1 & .85 & .65 & .83 & .66 & .58 & .13 \\
-%  Senufo & 2 & .87 & .65 & .83 & .78 & .76 & .13 \\
-%  Senufo & 3 & .83 & .50 & .71 & .91 & .91 & .13 \\
-%  Senufo & 4 & .83 & .50 & .68 & .95 & .96 & .13 \\
-%  Senufo & 5 & .83 & .50 & .67 & \textit{.95} & \textit{.97} & .14 \\
-%  \hline
-%  Berber & 1 & .93 & .85 & .91 & .70 & .62 & .20 \\
-%  Berber & 2 & .95 & .75 & .92 & .78 & .73 & .21 \\
-%  Berber & 3 & .95 & .62 & .87 & .93 & .91 & .20 \\
-%  Berber & 4 & .80 & .42 & .62 & .91 & .94 & .20 \\
-%  Berber & 5 & \textit{.59} & .33 & \textit{.45} & \textit{.85} & \textit{.91} & .19 \\
-%  \hline
-%\end{tabular}
-%\end{center}
-%\caption{\label{Results.}}
-%\end{table*}
 
 \begin{table*}[t!]
 \begin{center}
-%\begin{tabular}{|c|c|c|c||c|c|c||c|c|c||c|c|c|}
-%\cline{5-13} 
-%\multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c|}{} & \multicolumn{3}{c||}{brent} & \multicolumn{3}{c||}{zipf} & \multicolumn{3}{c|}{flat}\tabularnewline
-%\hline 
-%S & L & SAT & LA & TF & NSE & TL & TF & NSE & TL & TF & NSE & TL\tabularnewline
-%\hline 
-%\hline 
-%\multirow{2}{*}{1} & s & 0.01 & .03 & .85  & .0 & 5.83 & .83  & .0 & 5.87 & .58  & .0 & 5.75\tabularnewline
-%\cline{2-13} 
-% & b & 0.00 & .0 & .93 & .0 & 5.84 & .91 & .0 & 5.86 & .62  & .0 & 5.80\tabularnewline
-%\hline 
-%\hline 
-%\multirow{2}{*}{2} & s & 0.33 & 1.03 & .87 & .01 & 4.35 & .83 & .0 & 4.94 & .76 & .0 & 4.95\tabularnewline
-%\cline{2-13} 
-% & b & 0.00 & .05 & \textbf{.95} & .0 & 5.40 & \textbf{.92} & .0 & 5.48 & .73 & .0 & 5.36\tabularnewline
-%\hline 
-%\hline 
-%\multirow{2}{*}{3} & s & 0.88 & .99 & .83 & .06 & 3.04 & .71 & .04 & 3.21 & .91 & .01 & 4.20\tabularnewline
-%\cline{2-13} 
-% & b & 0.36 & 1.59 & \textbf{.95} & .02 & 3.54 & .87 & .03 & 2.97 & .91 & .01 & 3.95\tabularnewline
-%\hline 
-%\hline 
-%\multirow{2}{*}{4} & s & 0.98 & .96 & .83 & .08 & 2.81 & .68 & .08 & 2.62 & .96 & .01 & 3.96\tabularnewline
-%\cline{2-13} 
-% & b & 0.90 & 1.77 & .80 & .18 & 2.19 & .62 & .24 & 1.96 & .94 & .02 & 3.10\tabularnewline
-%\hline 
-%\hline 
-%\multirow{2}{*}{5} & s & 1.00 & .95 & .83 & .09 & 2.78 & .67 & .08 & 2.60 & \textbf{.97}  & .01 & 3.90\tabularnewline
-%\cline{2-13} 
-% & b & 0.99 & 1.75 & .59  & .34 & 1.85 & .45 & .39 & 1.67 & .91  & .03 & 2.81\tabularnewline
-%\hline 
-%\end{tabular}
-\scalebox{1.0}{
-\begin{tabular}{|c|c||c|c|c||c|c|c||c|c|c|}
-\cline{3-11} 
-\multicolumn{1}{c}{} & \multicolumn{1}{c|}{} & \multicolumn{3}{c||}{\textsc{bbr}} & \multicolumn{3}{c||}{\textsc{zipf}} & \multicolumn{3}{c|}{\textsc{flat}}\tabularnewline
+\scalebox{0.9}{
+\begin{tabular}{|c|c|c|c||c|c|c||c|c|c||c|c|c|}
+\cline{5-13} 
+\multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c|}{} & \multicolumn{3}{c||}{\textsc{brb}} & \multicolumn{3}{c||}{\textsc{zipf}} & \multicolumn{3}{c|}{\textsc{flat}}\tabularnewline
 \hline 
-S & L & TF & SE & TL & TF & SE & TL & TF & SE & TL\tabularnewline
+S & L & LA & SAT & TF & NSE & TL & TF & NSE & TL & TF & NSE & TL\tabularnewline
 \hline 
 \hline 
-\multirow{2}{*}{1} & s & .85  & .0 & 5.83 & .83  & .0 & 5.87 & .58  & .0 & 5.75\tabularnewline
-\cline{2-11} 
- & b & .93 & .0 & 5.84 & .91 & .0 & 5.86 & .62  & .0 & 5.80\tabularnewline
+\multirow{2}{*}{1} & s & .03 & 0.01 & .85  & .0 & 5.83 & .83  & .0 & 5.87 & .58  & .0 & 5.75\tabularnewline
+\cline{2-13} 
+ & b & .0 & 0.00 & .93 & .0 & 5.84 & .91 & .0 & 5.86 & .62  & .0 & 5.80\tabularnewline
 \hline 
 \hline 
-\multirow{2}{*}{2} & s & .87 & .01 & 4.35 & .83 & .0 & 4.94 & .76 & .0 & 4.95\tabularnewline
-\cline{2-11} 
- & b & \textbf{.95} & .0 & 5.40 & \textbf{.92} & .0 & 5.48 & .73 & .0 & 5.36\tabularnewline
+\multirow{2}{*}{2} & s & 1.03 & 0.33 & .87 & .01 & 4.35 & .83 & .0 & 4.94 & .76 & .0 & 4.95\tabularnewline
+\cline{2-13} 
+ & b & .05 & 0.00 & \textbf{.95} & .0 & 5.40 & \textbf{.92} & .0 & 5.48 & .73 & .0 & 5.36\tabularnewline
 \hline 
 \hline 
-\multirow{2}{*}{3} & s & .83 & .06 & 3.04 & .71 & .04 & 3.21 & .91 & .01 & 4.20\tabularnewline
-\cline{2-11} 
- & b & \textbf{.95} & .02 & 3.54 & .87 & .03 & 2.97 & .91 & .01 & 3.95\tabularnewline
+\multirow{2}{*}{3} & s & .99 & 0.88 & .83 & .06 & 3.04 & .71 & .04 & 3.21 & .91 & .01 & 4.20\tabularnewline
+\cline{2-13} 
+ & b & 1.59 & 0.36 & \textbf{.95} & .02 & 3.54 & .87 & .03 & 2.97 & .91 & .01 & 3.95\tabularnewline
 \hline 
 \hline 
-\multirow{2}{*}{4} & s & .83 & .08 & 2.81 & .68 & .08 & 2.62 & .96 & .01 & 3.96\tabularnewline
-\cline{2-11} 
- & b & .80 & .18 & 2.19 & .62 & .24 & 1.96 & .94 & .02 & 3.10\tabularnewline
+\multirow{2}{*}{4} & s & .96 & 0.98 & .83 & .08 & 2.81 & .68 & .08 & 2.62 & .96 & .01 & 3.96\tabularnewline
+\cline{2-13} 
+ & b & 1.77 & 0.90 & .80 & .18 & 2.19 & .62 & .24 & 1.96 & .94 & .02 & 3.10\tabularnewline
 \hline 
 \hline 
-\multirow{2}{*}{5} & s & .83 & .09 & 2.78 & .67 & .08 & 2.60 & \textbf{.97}  & .01 & 3.90\tabularnewline
-\cline{2-11} 
- & b & .59  & .34 & 1.85 & .45 & .39 & 1.67 & .91  & .03 & 2.81\tabularnewline
-\hline 
-\end{tabular}}
+\multirow{2}{*}{5} & s & .95 & 1.00 & .83 & .09 & 2.78 & .67 & .08 & 2.60 & \textbf{.97}  & .01 & 3.90\tabularnewline
+\cline{2-13} 
+ & b & 1.75 & 0.99 & .59  & .34 & 1.85 & .45 & .39 & 1.67 & .91  & .03 & 2.81\tabularnewline
+\hline
+\end{tabular}
+}
 \end{center}
-\caption{\label{Results.}Experimental results, grouped by different values of the \textsc{*Struct} constraint (S column) and language (L column, with ``s'' for pseudo-Senufo and ``b'' for pseudo-Berber). ``TF'' stands for token f-score, ``SE'' for normalized segmentation entropy and ``TL'' for the average gold token length for that condition.}	
+\vspace*{-5pt}
+\caption{\label{Results.}Experimental results, grouped by different values of the \textsc{*Struct} constraint (S column) and language (L column, with ``s'' for pseudo-Senufo and ``b'' for pseudo-Berber). ``TF'' stands for token f-score, ``SE'' for normalized segmentation entropy and ``TL'' for the average gold token length for that condition. We also report lexical saturation (SAT) and lexicon ambiguity (LA) for each experimental setting.}	
 \end{table*}
 
 \section{Discussion}
@@ -191,19 +136,15 @@ The results raise several questions. First, it is surprising that the phonotacti
 
 The first observation lends itself to an explanation along the lines of \cite{Fourtassi13a}: we calculate the normalized segmentation entropy (SE) for the artificial corpora, a measure of how much ambiguity with respect to word segmentation remains if the gold lexicon is provided to the learner, 0 indicating no uncertainty at all and 1.0 indicating complete uncertainty; we refer the reader to \cite{Fourtassi13a} for a more detailed explanation. For both \textsc{bbr} and \textsc{zipf}, SE provides a satisfying explanation for the variation in segmentability. Note that for pseudo-Berber, SE tends to be lower than for pseudo-Senufo for \textsc{*Struct}-values up to roughly 3, and these are exactly the conditions where pseudo-Berber attains higher token f-scores. The trend reverses for \textsc{*Struct}$>$3, again as would be predicted by looking at the SE. SE and TF are highly correlated $R = 0.81 \pm .13$.
 
-To understand why SE varies the way it does, note that for any given word-length, there are strictly less possible word types for pseudo-Senufo than for pseudo-Berber. For example, at the length of 2, there are 65 CV sequences licit for pseudo-Senufo, while there are $18^2$ licit XX sequences for pseudo-Berber. Even in the absence of strong penalties on word length, it will in general be necessary for Pseudo-Senufo to recycle shorter words as sub-parts of longer words. 
-
-This picture reverses, however, if the use of long words is heavily penalized. For \textsc{*Struct}$>$3, pseudo-Berber is effectively limited to words of length 3 to 4 phonemes because longer sequences are penalized so strongly. Now, the absence of any constraint on possible word-forms turns into a disadvantage, due to the high probability of high-frequency single-segment ``words''. Single-segment words cause high segmentation ambiguity because they might be segmented out (incorrectly) whenever the segment occures. This issue is ameliorated in pseudo-Senufo, where the phonotactic requirements categorically disallow single-segment words. This is apparent for \textsc{*Struct}=4 and \textsc{*Struct}=5: pseudo-Senufo shows only an increase in SE from 0.08 to 0.09, while pseudo-Berber's SE changes from 0.18 to 0.34, and this huge increase in ambiguity is directly reflected in the low TF of 59\%, compared to 83\% for pseudo-Senufo.
+To understand why SE varies the way it does, note that for any given word-length, there are strictly less possible word types for pseudo-Senufo than for pseudo-Berber. For example, at the length of 2, there are 65 CV sequences licit for pseudo-Senufo, while there are $18^2$ licit XX sequences for pseudo-Berber. Even in the absence of strong penalties on word length, it will in general be necessary for Pseudo-Senufo to recycle shorter words as sub-parts of longer words.  This picture reverses, however, if the use of long words is heavily penalized. For \textsc{*Struct}$>$3, pseudo-Berber is effectively limited to words of length 3 to 4 phonemes because longer sequences are penalized so strongly. Now, the absence of any constraint on possible word-forms turns into a disadvantage, due to the high probability of high-frequency single-segment ``words''. Single-segment words cause high segmentation ambiguity because they might be segmented out (incorrectly) whenever the segment occures. This issue is ameliorated in pseudo-Senufo, where the phonotactic requirements categorically disallow single-segment words. This is apparent for \textsc{*Struct}=4 and \textsc{*Struct}=5: pseudo-Senufo shows only an increase in SE from 0.08 to 0.09, while pseudo-Berber's SE changes from 0.18 to 0.34, and this huge increase in ambiguity is directly reflected in the low TF of 59\%, compared to 83\% for pseudo-Senufo. This difference between pseudo-Senufo and pseudo-Berber can also be quantified through lexical saturation (SAT) and lexicon ambiguity (LA), also given in Table~\ref{Results.}. For a given set of word types, its lexical saturation with respect to the language it belongs to is defined as the probability of a randomly sampled word from that language to already be included in this set. We approximate these values for pseudo-Berber and pseudo-Senufo by simulation. A second measure is (within-)lexicon ambiguity: we use a dynamic program to calculate the average number of parses of each lexicon type given the other words in the lexicon for the artificial corpora we generated. These additional measures allow us to refine the explanation provided by SE alone. Note, for example, that even though for both pseudo-Berber and pseudo-Senufo SE is essentially 0 for \textsc{*Struct}$<$3, LA and SAT are already considerably higher for pseudo-Senufo than for pseudo-Berber, due to the former's CV-constraint on possible words. While this higher ambiguity is not reflected in SE because knowledge of the gold-lexicon and frequencies is assumed, the actual segmentation is performed fully unsupervised and is consequently affected by it, accounting for the difference between pseudo-Berber and pseudo-Senufo.
 
 While this explanation pertains directly to the artificial setting of this paper, it also provides strong support to the previous suggestions by \cite{Daland13a} and \cite{Fourtassi13a} that restrictive phonotactics can have a \emph{negative} impact on segmentability. While the languages used here are highly simplified as compared to natural languages, the problematic phenomena do occur in natural languages. For example, the Slavic languages have numerous single-segment prepositions (e.g. Russian: /s/ `with', /k/ `to (dative)', /v/ `in'), and the segmentation of these items is an open research problem.
 
-There is a final outstanding puzzle in these results, pertaining to the \textsc{flat} distribution. Recall that in this distribution, each type was generated with an equal frequency (about 21 tokens); this `unnatural' frequency distribution violates the DP segmenter's assumptions about the frequency distribution much more strongly than \textsc{BBR} or \textsc{Zipf}, and yet the result is comparable or actually better segmentation for \textsc{*Struct} $>$ 2, while it is significantly worse for \textsc{*Struct} $\leq$ 2, for both pseudo-Senufo and pseudo-Berber. These results do not lend themselves to an explanation through SE, which is close to zero throughout this distribution. Instead, we speculate that this pattern arises from an interaction between (i) the balanced evidence for each wordform, and (ii) the DP segmenter's assumptions about word lengths.
-
-Recall that the DP model assumes a hypergeometric prior on word lengths. We follow previous work, which reported that segmentation on natural language data to variation in this parameter, by setting $Pr(segment) = Pr(end-of-word) = \frac{1}{2}$ (yielding an expected average length of 2). Indeed, when \textsc{*Struct} is large enough, words appear to be `close enough' to the expected length. We speculate that the superior performance in these cases arises from an abundance of evidence about each word type; in other words the absence of expected ultra-high-frequency types does not hurt segmentation as much as the absence of ultra-low-frequency items helps it. However when \textsc{*Struct} is too low, words are quite long (the average is not far below the ceiling of 6), incurring a large penalty from the hypergeometric prior. In this case, we speculate that the absence of high-frequency words turns into a severe disadvantage. Presumably segmentation is better in \textsc{brb} and \textsc{zipf} because high-frequency items are picked out reliably by statistical learners, allowing them to overcome the larger penalty arising from a mismatch between the hypergeometric prior and the data. The `moral' is that high-frequency elements provide an `anchor' for statistical learning mechanisms, allowing them overcome moderate mismatches between the data and expectations, a point which is consistent with recent experimental work~\cite{Kurumada13a}.
+There is a final outstanding puzzle in these results, pertaining to the \textsc{flat} distribution. Recall that in this distribution, each type was generated with an equal frequency (about 21 tokens); this `unnatural' frequency distribution violates the model's assumptions about the frequency distribution much more strongly than \textsc{BBR} or \textsc{Zipf}, and yet the result is comparable or actually better segmentation for \textsc{*Struct} $>$ 2, while it is significantly worse for \textsc{*Struct} $\leq$ 2, for both pseudo-Senufo and pseudo-Berber. These results do not lend themselves to an explanation through SE which is close to zero throughout this distribution. Instead, we speculate that this pattern arises from an interaction between (i) the balanced evidence for each wordform, and (ii) the model's assumptions about word lengths. Recall that its prior on admissible words assumes a geometric distribution over word lengths. Following previous work, which reported that segmentation on natural language data is largely invariant to variation of this~\cite{Goldwater09a}, we set $Pr(\textsc{eow}) = \frac{1}{2}$, yielding an expected average length of 2. When \textsc{*Struct} is large enough, words appear to be `close enough' to the expected length. We speculate that the superior performance in these cases arises from an abundance of evidence about each word type; in other words the absence of expected ultra-high-frequency types does not hurt segmentation as much as the absence of ultra-low-frequency items helps it. However when \textsc{*Struct} is too low, words are quite long (the average is not far below the ceiling of 6), incurring a large penalty from the geometric prior. In this case, we speculate that the absence of high-frequency words turns into a severe disadvantage. Presumably segmentation is better in \textsc{brb} and \textsc{zipf} because high-frequency items are picked out reliably by statistical learners, allowing them to overcome the larger penalty arising from a mismatch between the geometric prior and the data. Indeed, we performed additional experiments for the \textsc{flat} distribution and found that changing the expected word-length yields considerably better scores for \textsc{*Struct}$<$3, as expected.\footnote{We also note that over-estimating the expected length of words does not affect segmentation results as dramatically as under-estimating does, presumably because due to the additional generation of a specific segment, shorter words will still be preferred to longer words by the prior.} The `moral' from this is that high-frequency elements provide an `anchor' for statistical learning mechanisms, allowing them overcome moderate mismatches between the data and expectations, a point which is consistent with recent experimental work~\cite{Kurumada13a}.
 
 \section{Conclusion}
 \vspace*{-5pt}
-We used artificial language corpora to test the idea that more restrictive phonotactics negatively impact statistical word segmentation models. Three variables were manipulated: categorical phontoactics (strict CV versus `phoneme salad'), the pressure for words to be short (\textsc{*Struct}), and the word frequency distribution. The results show a complex interaction between these three factors, which may be summarized as follows: when the pressure for words to be short is very high, the language is forced to recycle existing words as sub-parts of longer words, yielding intrinsic segmentation abiguity. In this case, restrictive phonotactics provide a modest benefit, by placing a lower limit on the sub-parts that can be recycled. However when there is less pressure for words to be short, restrictive phonotactic simply reduce the space of licit forms, encouraging the reuse of sub-parts which causes a modest decrement. Natural language distributions appear to facilitate word segmentation by providing a small number of high-frequency words, which serve as `anchors' to facilitate segmentation, even in the case of mismatches between phonotactic expectations and the observable language data. This work has caused us to look at the relationship between word shape, word length, and word frequency in a way that we did not before; it illustrates how artificial languages can tease out subtle predictions of computational models, address specific hypotheses about the design of language the cognitive tools we bring to learning it.
+We used artificial language corpora to test the idea that more restrictive phonotactics negatively impact statistical word segmentation models. Three variables were manipulated: categorical phontoactics (strict CV versus `phoneme salad'), the pressure for words to be short (\textsc{*Struct}), and the word frequency distribution. The results show a complex interaction between these three factors, which may be summarized as follows: when the pressure for words to be short is very high, the language is forced to recycle existing words as sub-parts of longer words, yielding intrinsic segmentation abiguity. In this case, restrictive phonotactics provide a modest benefit, by placing a lower limit on the sub-parts that can be recycled. However when there is less pressure for words to be short, restrictive phonotactic simply reduce the space of licit forms, encouraging the reuse of sub-parts which causes a modest decrement. Natural language distributions appear to facilitate word segmentation by providing a small number of high-frequency words, which serve as `anchors' to facilitate segmentation, even in the case of mismatches between phonotactic expectations and the observable language data. This work has caused us to look at the relationship between word shape, word length, and word frequency in a way that we did not before; it illustrates how artificial languages can tease out subtle predictions of computational models, address specific hypotheses about the design of language and the cognitive tools we bring to learning it.
 
 \bibliographystyle{acl}
 \bibliography{acl}
