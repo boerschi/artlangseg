@@ -1,7 +1,7 @@
 lang	struct	la	sat	len	dist	tf	nse	tl
 senufo	1	0.03	0.01	5.42	bbr	0.85	0	5.83
 berber	1	0	0	5.87	bbr	0.93	0	5.84
-senufo	2	1.03	0.33	4.324	bbr	0.87	0.01	4.35
+senufo	2	1.03	0.33	4.32	bbr	0.87	0.01	4.35
 berber	2	0.05	0	5.35	bbr	0.95	0	5.4
 senufo	3	0.99	0.88	3.2	bbr	0.83	0.06	3.04
 berber	3	1.59	0.36	3.27	bbr	0.95	0.02	3.54
@@ -21,7 +21,7 @@ senufo	5	0.95	1	2.9	zipf	0.67	0.08	2.6
 berber	5	1.75	0.99	2.05	zipf	0.45	0.39	1.67
 senufo	1	0.03	0.01	5.42	flat	0.58	0	5.75
 berber	1	0	0	5.87	flat	0.62	0	5.8
-senufo	2	1.03	0.33	4.324	flat	0.76	0	4.95
+senufo	2	1.03	0.33	4.32	flat	0.76	0	4.95
 berber	2	0.05	0	5.35	flat	0.73	0	5.36
 senufo	3	0.99	0.88	3.2	flat	0.91	0.01	4.2
 berber	3	1.59	0.36	3.27	flat	0.91	0.01	3.95
