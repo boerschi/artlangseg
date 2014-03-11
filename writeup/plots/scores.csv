@@ -1,4 +1,4 @@
-lang	struct	la	sat	len	dist	tf	nse	tl
+language	struct	la	sat	len	dist	"token f-score"	nse	token-length
 senufo	1	0.03	0.01	5.42	bbr	0.85	0	5.83
 berber	1	0	0	5.87	bbr	0.93	0	5.84
 senufo	2	1.03	0.33	4.324	bbr	0.87	0.01	4.35
